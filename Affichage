@@ -1,0 +1,13 @@
+package BateauBase;
+
+public class Affichage {
+	
+	private Ocean o;
+	
+	public Affichage(Ocean o) {
+		this.o = o;
+	}
+	
+	//o.getNombreBateau();
+	
+}
