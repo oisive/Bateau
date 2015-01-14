@@ -1,0 +1,59 @@
+package BateauBase;
+
+import java.util.ArrayList;
+
+public class Case {
+	private ArrayList<Bateau> listeNavires;
+
+	public Case(){
+		listeNavires = new ArrayList<Bateau>(); 
+	}
+	
+	public void ajouterBateau(Bateau b){
+		listeNavires.add(b);
+	}
+	
+	public void sortirBateau(Bateau b){
+		listeNavires.remove(b);
+	}
+	
+	public void sortirBateau(int i){
+		listeNavires.remove(i);
+	}
+	
+	public Bateau getBateau(int i){
+		return listeNavires.get(i);
+	}
+	
+	public ArrayList<Bateau> getListe(){
+		return listeNavires;
+	}
+	
+	public boolean estVide(){
+		return getListe().isEmpty();
+	}
+	
+	public int getNombreBateauxCase(){
+		int nombre = 0; 
+		while(!estVide())
+			++nombre;
+		return nombre;
+	}
+	
+	public Bateau[] listeBateau(){
+		Bateau liste[] = new Bateau[getNombreBateauxCase()];
+		while(!estVide()){
+			int i = 0;
+			liste[i] = getBateau(i);
+			++i;
+		}
+		return liste;	
+	}
+	
+	public void affichageMoche(){
+		for(Bateau i : getListe()){
+			if(!estVide())
+				System.out.println("Le bateau numero " + i.getNumero() + " est au port.\n");
+		}
+	}
+}
