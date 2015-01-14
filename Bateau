@@ -1,0 +1,17 @@
+package BateauBase;
+
+public class Bateau {
+	private int numero;
+	
+	public Bateau(){
+		numero = 0;
+	}
+	
+	public Bateau(int num){
+		numero = num;
+	}
+	
+	public int getNumero(){
+		return numero;
+	}
+}
