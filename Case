@@ -33,11 +33,8 @@ public class Case {
 		return getListe().isEmpty();
 	}
 	
-	public int getNombreBateauxCase(){
-		int nombre = 0; 
-		while(!estVide())
-			++nombre;
-		return nombre;
+	public int getNombreBateauxCase(){ 
+		return listeNavires.size();
 	}
 	
 	public Bateau[] listeBateau(){
@@ -52,8 +49,9 @@ public class Case {
 	
 	public void affichageMoche(){
 		for(Bateau i : getListe()){
-			if(!estVide())
+			if(!estVide()){
 				System.out.println("Le bateau numero " + i.getNumero() + " est au port.\n");
+			}
 		}
 	}
 }
