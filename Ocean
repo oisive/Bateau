@@ -28,6 +28,10 @@ public class Ocean {
 		return tableau;
 	}
 	
+	public Case getCase(int i, int j){
+		return tableau[i][j];
+	}
+	
 	public void placerBateaux(){
 		int ligne;
 		int colonne;
@@ -42,32 +46,53 @@ public class Ocean {
 			colonne = rand2.nextInt(max);
 			tableau[ligne][colonne].ajouterBateau(b);
 		}
-		
-		
 	}
 	
+	public void parcourir(){
+		int limite = getNombreBateau();
+		Bateau b = new Bateau();
+		for(int i = 0 ; i < limite ; i++){
+			for(int j = 0 ; j < limite ; j++){
+				if(!getCase(i,j).estVide()){
+					for(int k = 0 ; k < getCase(i,j).getNombreBateauxCase() ; k++){
+						b = getCase(i,j).getBateau(k);
+					}		
+				}
+			}
+		}
+	}
+	
+	
+	
+	
 	public void deplacerBateau(){
-		for(int i = 0 ; i < getNombreBateau() ; ++i){			// on parcourt toutes les lignes du tableau
-			for(int j = 0 ; j < getNombreBateau() ; ++j){		// on parcourt toutes les colonnes du tableau, on tombe donc sur une case
+		int limite = getNombreBateau();
+		
+		for(int i = 0 ; i < limite ; i++){	// on parcourt toutes les lignes du tableau
+			for(int j = 0 ; j < limite ; j++){// on parcourt toutes les colonnes du tableau, on tombe donc sur une case			
 				if(!tableau[i][j].estVide()){					// si le tableau de bateaux n'est pas vide
 					while(!tableau[i][j].estVide()){			// on le parcourt
 						int k = 0;
 						Bateau b = new Bateau();			
+						
 						b = tableau[i][j].getBateau(k);			// on stocke le bateau
 						tableau[i][j].sortirBateau(k);			// puis on le sort
 						
-						if(j == (getNombreBateau() - 1)){		// si le bateau etait au bout de sa ligne ; tapait sur la droite
-							if(i == (getNombreBateau() - 1)){	// si le bateau etait tout en bas egalement
+						if(j == limite - 1) {		// si le bateau etait au bout de sa ligne ; tapait sur la droite
+							if(i == limite - 1) {	// si le bateau etait tout en bas egalement
 								tableau[0][0].ajouterBateau(b); // on le bouge sur la premiere case
+								System.out.println("cas 1 pour la case : " + k);
 							}
 							else{
 								tableau[i+1][0].ajouterBateau(b); // s'il n'était pas tout en bas on le bouge au début de la ligne suivante
+								System.out.println("cas 2 pour la case : " + k);
 							}						
 						}
 						else{
 							tableau[i][j+1].ajouterBateau(b);	// s'il n'était ni tout en bas ni au bout de sa ligne, il avance sur la case à côté	
+							System.out.println("cas 3 pour la case : " + k);
 						}
-						++k;
+						
 					}						
 				}
 			}
