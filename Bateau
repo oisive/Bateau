@@ -2,6 +2,7 @@ package BateauBase;
 
 public class Bateau {
 	private int numero;
+	private int aJoue; 
 	
 	public Bateau(){
 		numero = 0;
@@ -9,9 +10,38 @@ public class Bateau {
 	
 	public Bateau(int num){
 		numero = num;
+		aJoue = 0;
 	}
 	
 	public int getNumero(){
 		return numero;
+	}
+	
+	public int getAJoue(){
+		return aJoue;
+	}
+	
+	public void setAJoue(int num){
+		aJoue = num;
+	}
+	
+	public char choixDeplacement(){
+		int choix = (int) (Math.random() * 3);
+		
+		switch(choix){
+		case 0:
+			return 'N';
+		case 1:
+			return 'S';
+		case 2:
+			return 'O';
+		default:
+			return 'E';
+		}
+		
+	}
+
+	public int demanderAction() {
+		return 0;
 	}
 }
