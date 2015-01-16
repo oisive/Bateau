@@ -3,14 +3,14 @@ package BateauBase;
 public class Appli {
 	public static void main(String[] args) {
 	Ocean oc = new Ocean(3);
-	int k = 1;
+	int k = 0	;
 	oc.placerBateaux();
 	Case tab[][] = oc.getTableau();
 	
 	for(int i = 0 ; i < oc.getNombreBateau() ; i++){
 		for(int j = 0 ; j < oc.getNombreBateau() ; j++){
 			if(!tab[i][j].estVide()){
-				System.out.println("Case n°" + k + "\n");
+				System.out.println("Port n°" + k + "\n");
 				tab[i][j].affichageMoche();
 				System.out.println("\n");
 			}
@@ -18,12 +18,16 @@ public class Appli {
 		}
 	}
 	
-	oc.deplacerBateau();
+	Affichage ac = new Affichage(oc); 
+	
+	oc.determinerCaseDeplacement();
+
+	k = 0;
 	
 	for(int i = 0 ; i < oc.getNombreBateau() ; i++){
 		for(int j = 0 ; j < oc.getNombreBateau() ; j++){
 			if(!tab[i][j].estVide()){
-				System.out.println("Case n°" + k + "\n");
+				System.out.println("Port n°" + k + "\n");
 				tab[i][j].affichageMoche();
 				System.out.println("\n");
 			}
@@ -31,6 +35,7 @@ public class Appli {
 		}
 	}
 	
+	//Affichage(oc);
 
 	}
 }
