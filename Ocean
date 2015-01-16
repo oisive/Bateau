@@ -1,29 +1,47 @@
 package BateauBase;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Ocean {
 	private int nombreBateau;
 	private Case tableau[][];
+	private ArrayList<Bateau> totalBateaux; 
+	private int tour;
 	
 	public Ocean(){
-		nombreBateau = 0;
+		setNombreBateau(0);
 		tableau = new Case[0][0];
-	}
-	
-	public Ocean(int nombre){
-		nombreBateau = nombre;
-		tableau = new Case[nombre][nombre];
-		for(int i = 0 ; i < nombre ; ++i){
-			for(int j = 0 ; j < nombre ; ++j){
-				tableau[i][j] = new Case();
-			}
-		}
+		setTour(1);
 	}
 	
 	public int getNombreBateau(){
 		return nombreBateau;
 	}
 	
+	public void setNombreBateau(int num){
+		nombreBateau = num;
+	}
+	
+	public int getTour(){
+		return tour;
+	}
+	
+	public void setTour(int num){
+		tour = num;
+	}
+	
+	public Ocean(int nombre){
+		setNombreBateau(nombre);
+		totalBateaux = new ArrayList<Bateau>();
+		tableau = new Case[nombre][nombre];
+		for(int i = 0 ; i < nombre ; ++i){
+			for(int j = 0 ; j < nombre ; ++j){
+				tableau[i][j] = new Case();
+			}
+		}
+		setTour(1);
+	}
+
 	public Case[][] getTableau(){
 		return tableau;
 	}
@@ -39,67 +57,95 @@ public class Ocean {
 		Random rand1 = new Random();
 		Random rand2 = new Random();
 	
-		
 		for(int i = 0 ; i < max ; ++i){
 			Bateau b = new Bateau(i);
 			ligne = rand1.nextInt(max);
 			colonne = rand2.nextInt(max);
-			tableau[ligne][colonne].ajouterBateau(b);
+			getCase(ligne, colonne).ajouterBateau(b);
+			totalBateaux.add(b);
 		}
 	}
 	
-	public void parcourir(){
+	public void recupererBateau(Bateau b){
+		for(int i = 0 ; i < nombreBateau ; ++i){
+			for(int j = 0 ; j < nombreBateau ; ++j){
+				if(getCase(i,j).getListe().contains(b)){
+					
+				}
+					
+			}
+		}
+	}
+	
+	public void determinerCaseDeplacement(){
 		int limite = getNombreBateau();
 		Bateau b = new Bateau();
+		//char dir; 
+		Case c = new Case();		
+		
 		for(int i = 0 ; i < limite ; i++){
 			for(int j = 0 ; j < limite ; j++){
 				if(!getCase(i,j).estVide()){
 					for(int k = 0 ; k < getCase(i,j).getNombreBateauxCase() ; k++){
-						b = getCase(i,j).getBateau(k);
+						if(getCase(i,j).getBateau(k).getAJoue() == 0){
+							b = getCase(i,j).getBateau(k);
+							if(b.demanderAction() == 0){	
+								getCase(i,j).sortirBateau(b);
+								//dir = b.choixDeplacement(); 
+								c = rendreCaseSuivante(i,j);
+								b.setAJoue(1);
+								c.ajouterBateau(b);
+								k--;	
+							}
+						}
 					}		
 				}
 			}
 		}
 	}
 	
-	
-	
-	
-	public void deplacerBateau(){
-		int limite = getNombreBateau();
+	public Case rendreCaseSuivante(int i, int j){
+		Case c = new Case();
+		int limite = getNombreBateau() - 1;
 		
-		for(int i = 0 ; i < limite ; i++){	// on parcourt toutes les lignes du tableau
-			for(int j = 0 ; j < limite ; j++){// on parcourt toutes les colonnes du tableau, on tombe donc sur une case			
-				if(!tableau[i][j].estVide()){					// si le tableau de bateaux n'est pas vide
-					while(!tableau[i][j].estVide()){			// on le parcourt
-						int k = 0;
-						Bateau b = new Bateau();			
-						
-						b = tableau[i][j].getBateau(k);			// on stocke le bateau
-						tableau[i][j].sortirBateau(k);			// puis on le sort
-						
-						if(j == limite - 1) {		// si le bateau etait au bout de sa ligne ; tapait sur la droite
-							if(i == limite - 1) {	// si le bateau etait tout en bas egalement
-								tableau[0][0].ajouterBateau(b); // on le bouge sur la premiere case
-								System.out.println("cas 1 pour la case : " + k);
-							}
-							else{
-								tableau[i+1][0].ajouterBateau(b); // s'il n'était pas tout en bas on le bouge au début de la ligne suivante
-								System.out.println("cas 2 pour la case : " + k);
-							}						
-						}
-						else{
-							tableau[i][j+1].ajouterBateau(b);	// s'il n'était ni tout en bas ni au bout de sa ligne, il avance sur la case à côté	
-							System.out.println("cas 3 pour la case : " + k);
-						}
-						
-					}						
-				}
+		if(j == limite){
+			if(i == limite){
+				c = getCase(0,0);
+			}
+			else{
+				c = getCase(i + 1, 0);
 			}
 		}
+		else{
+			c = getCase(i, j + 1);	
+		}
+			
+		return c;
 	}
 	
+	public Case rendreCase(int i, int j, char dir){
+		Case c = new Case();
 
+		switch(dir){
+		case 'N' :
+			c = getCase(i - 1, j);
+			break;
+		case 'S' :
+			c = getCase(i + 1, j);
+			;
+			break;
+		case 'O' :
+			c = getCase(i, j - 1);
+			;
+			break;
+		case 'E' :
+			c = getCase(i, j + 1);
+			;
+			break;
+		}
+			
+		return c;
+	}
 	
 	
 	
