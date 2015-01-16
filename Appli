@@ -19,6 +19,7 @@ public class Appli {
 	}
 	
 	Affichage ac = new Affichage(oc); 
+	ac.print();
 	
 	oc.determinerCaseDeplacement();
 
@@ -35,7 +36,7 @@ public class Appli {
 		}
 	}
 	
-	//Affichage(oc);
+	ac.print();
 
 	}
 }
