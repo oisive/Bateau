@@ -21,8 +21,8 @@ public class Case {
 		listeNavires.remove(i);
 	}
 	
-	public Bateau getBateau(int i){
-		return listeNavires.get(i);
+	public Bateau getBateau(int index){
+		return listeNavires.get(index);
 	}
 	
 	public ArrayList<Bateau> getListe(){
