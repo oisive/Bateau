@@ -1,42 +1,40 @@
 package BateauBase;
 
-public class Appli {
-	public static void main(String[] args) {
-	Ocean oc = new Ocean(3);
-	int k = 0	;
-	oc.placerBateaux();
-	Case tab[][] = oc.getTableau();
+public class Affichage {
 	
-	for(int i = 0 ; i < oc.getNombreBateau() ; i++){
-		for(int j = 0 ; j < oc.getNombreBateau() ; j++){
-			if(!tab[i][j].estVide()){
-				System.out.println("Port n°" + k + "\n");
-				tab[i][j].affichageMoche();
-				System.out.println("\n");
+	private Ocean o;
+	
+	public Affichage(Ocean o) {
+		
+		this.o = o;
+		
+	}
+	
+	public void print() {
+		int taille = o.getNombreBateau();
+		int n = 0;
+		System.out.print("\n");
+		for(int i = 0 ; i < taille ; i++){
+			System.out.print("  ");
+			for(int j = 0 ; j < taille ; j++){
+				if(!o.getCase(i, j).estVide()){
+					/*for(int index = 0 ; !o.getCase(i, j).estVide() ; index++)			Affichage pas au point donc je n'en affiche qu'un par case pour l'instant
+					   	n = o.getCase(i, j).getBateau(index).getNumero();*/
+				 	n = o.getCase(i, j).getBateau(0).getNumero();
+				 	System.out.print(" " + n + " ");
+				}
+				
+				else{
+					System.out.print(" _ ");
+				}
 			}
-			++k;
+			System.out.print("\n");
 		}
+		
+		
+		System.out.print("\n\n");
 	}
 	
-	Affichage ac = new Affichage(oc); 
-	ac.print();
+	//o.getNombreBateau();
 	
-	oc.determinerCaseDeplacement();
-
-	k = 0;
-	
-	for(int i = 0 ; i < oc.getNombreBateau() ; i++){
-		for(int j = 0 ; j < oc.getNombreBateau() ; j++){
-			if(!tab[i][j].estVide()){
-				System.out.println("Port n°" + k + "\n");
-				tab[i][j].affichageMoche();
-				System.out.println("\n");
-			}
-			++k;
-		}
-	}
-	
-	ac.print();
-
-	}
 }
